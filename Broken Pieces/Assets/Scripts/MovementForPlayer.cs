@@ -25,8 +25,10 @@ public class MovementForPlayer : MonoBehaviour
     [SerializeField] private float speedCapMultiplacation = 2f;
     [SerializeField] private float accelerationMultiplaction = 2f;
     [SerializeField] private float jumpMultiplacation = 2f;
-    [SerializeField] private float dashSpeedBurst = 10f;
+    [SerializeField] private float dashSpeed = 10f;
 
+    public bool canDash = false;
+    bool pressedDash = false;
     bool isGrounded = false;
     bool velCap = true;
     bool lastFrameGrounded = false;
@@ -44,12 +46,19 @@ public class MovementForPlayer : MonoBehaviour
     float timer2JB = 10;
     float timer3WJ = 10;
     float timer4VC = 0;
+    float timer5NGF = 0;
     float finalAccelc;
     float finalSpeedCap;
+
+    //floats for actively applyed stats
+    float trueAccel;
+    float trueMaxSpeed;
+    float trueJumpForce;
 
     bool ran1 = false;
     bool ran2 = false;
     bool ran3 = false;
+    bool ran4 = false;
 
     bool maskState1S = false;
     bool maskState2J = false;
@@ -93,10 +102,35 @@ public class MovementForPlayer : MonoBehaviour
             maskState2J = false;
             maskState3D = true;
         }
+        //Hanles player dash
+        if (maskState3D && !isGrounded && Input.GetKeyDown(KeyCode.Z) && !haningOnWall)
+        {
+            pressedDash = true;
+        }
     }
     void FixedUpdate()
     {
-        holdingJump = Input.GetKey(KeyCode.Z);
+        //Handels multiplyers for masks
+        if (maskState1S)
+        {
+            trueMaxSpeed = maxSpeed * speedCapMultiplacation;
+            trueAccel = acceleration * accelerationMultiplaction;
+        }
+        else
+        {
+            trueAccel = acceleration;
+            trueMaxSpeed = maxSpeed;
+        }
+        if (maskState2J)
+        {
+            trueJumpForce = jumpForce * jumpMultiplacation;
+        }
+        else
+        {
+            trueJumpForce = jumpForce;
+        }
+            //Checks if player is holding jump key
+            holdingJump = Input.GetKey(KeyCode.Z);
         //timers
         timer1JB += Time.deltaTime;
         timer2JB += Time.deltaTime;
@@ -104,6 +138,15 @@ public class MovementForPlayer : MonoBehaviour
         timer4VC -= Time.deltaTime;
         //Check if player is in contact with ground
         isGrounded = Physics2D.OverlapBox(new Vector2(playerTransform.position.x, playerTransform.position.y - groundCheckOffsetY), new Vector2(groundCheckWidth, 0.1f), 0f, layerOfGround);
+        //Only ticks timer if not grounded
+        if (!isGrounded)
+        {
+            timer5NGF += Time.deltaTime;
+        } else
+        {
+            canDash = true;
+            timer5NGF = 0;
+        }
         //Check if player is in contact with wall
         wallJumpBoxContactR = Physics2D.OverlapBox(new Vector2(playerTransform.position.x + wallGrabBoxOffsetX, playerTransform.position.y + wallGrabBoxPosY), new Vector2(0.1f, wallGrabBoxHightY), 0f, layerOfGround);
         wallJumpBoxContactL = Physics2D.OverlapBox(new Vector2(playerTransform.position.x + wallGrabBoxOffsetX * -1, playerTransform.position.y + wallGrabBoxPosY), new Vector2(0.1f, wallGrabBoxHightY), 0f, layerOfGround);
@@ -119,11 +162,13 @@ public class MovementForPlayer : MonoBehaviour
             velCap = true;
         } else
         {
+            ran4 = false;
             velCap = false;
         }
         //Handels haning on wall
         if (Input.GetKey(KeyCode.LeftArrow) && wallJumpBoxContactL && !ran2)
         {
+            canDash = true;
             ran1 = false;
             ran2 = true;
             ran3 = false;
@@ -135,6 +180,7 @@ public class MovementForPlayer : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow) && wallJumpBoxContactR && !ran2)
         {
+            canDash = true;
             ran1 = false;
             ran2 = true;
             ran3 = false;
@@ -157,22 +203,32 @@ public class MovementForPlayer : MonoBehaviour
         //LR movement
         if (Input.GetKey(KeyCode.LeftArrow) && !haningOnWall && timer3WJ >= 0.15)
         {
-            rb.velocity = new Vector2(rb.velocity.x - acceleration, rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.x - trueAccel, rb.velocity.y);
         }
         if (Input.GetKey(KeyCode.RightArrow) && !haningOnWall && timer3WJ >= 0.15)
         {
-            rb.velocity = new Vector2(rb.velocity.x + acceleration, rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.x + trueAccel, rb.velocity.y);
         }
         //Top speed cap
-        if (velCap && rb.velocity.x > maxSpeed)
+        if (velCap && rb.velocity.x > trueMaxSpeed)
         {
-            rb.velocity = new Vector2 (rb.velocity.x * 0.92f, rb.velocity.y);
-            //rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
+            if (rb.velocity.y > trueMaxSpeed && !ran4)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, trueMaxSpeed);
+                ran4 = true;
+            }
+            rb.velocity = new Vector2(trueMaxSpeed, rb.velocity.y);
+            //rb.velocity = new Vector2 (rb.velocity.x * 0.92f, rb.velocity.y);
         }
-        if (velCap && rb.velocity.x < maxSpeed * -1)
+        if (velCap && rb.velocity.x < trueMaxSpeed * -1)
         {
-            rb.velocity = new Vector2(rb.velocity.x * 0.92f, rb.velocity.y);
-            //rb.velocity = new Vector2(maxSpeed * -1, rb.velocity.y);
+            if (rb.velocity.y > trueMaxSpeed && !ran4)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, trueMaxSpeed);
+                ran4 = true;
+            }
+            rb.velocity = new Vector2(trueMaxSpeed * -1, rb.velocity.y);
+            //rb.velocity = new Vector2(rb.velocity.x * 0.92f, rb.velocity.y);
         }
 
         //Handles player jump condition
@@ -188,16 +244,16 @@ public class MovementForPlayer : MonoBehaviour
             timer3WJ = 0;
             timer4VC = 0.3f;
             ran3 = true;
-            rb.velocity = new Vector2(jumpForce * 1.2f, jumpForce);
+            rb.velocity = new Vector2(trueJumpForce * 1.2f, trueJumpForce);
         }
         if (wallHangR && timer1JB < 0.05 && !ran3)
         {
             timer4VC = 0.3f;
             timer3WJ = 0;
             ran3 = true;
-            rb.velocity = new Vector2(jumpForce * -1.2f, jumpForce);
+            rb.velocity = new Vector2(trueJumpForce * -1.2f, trueJumpForce);
         }
-        //Adds extra gravity to tre player when fall and not holding jump button
+        //Adds extra gravity to the player when falling and not holding jump button
         if (!holdingJump && !haningOnWall)
         {
             rb.gravityScale = defaultGravScale + extraFallGravity;
@@ -213,21 +269,50 @@ public class MovementForPlayer : MonoBehaviour
         {
             lastFrameGrounded = true;
         }
+        //Handles dash condition
+        if (pressedDash && canDash)
+        {
+            pressedDash = false;
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                Dash(true, false);
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                Dash(false, false);
+            }
+        }
     }
     void Jump()
     {
         rb.gravityScale = defaultGravScale;
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.velocity = new Vector2(rb.velocity.x, trueJumpForce);
     }
-    void Dash()
+    void Dash(bool goingRight, bool digionalJump)
     {
-
+        Debug.Log("Dashed");
+        canDash = false;
+        if (goingRight)
+        {
+            rb.velocity = new Vector2(dashSpeed * 5, rb.velocity.y);
+            timer4VC = 0.05f;
+        }
+        if (!goingRight)
+        {
+            rb.velocity = new Vector2(dashSpeed * -5, rb.velocity.y);
+            timer4VC = 0.05f;
+        }
+        if (digionalJump)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, dashSpeed * 5);
+        }
     }
     private void OnDrawGizmos()
     {
         //Draws ground check box
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x, playerTransform.position.y - groundCheckOffsetY, playerTransform.position.z), new Vector3(groundCheckWidth, 0.1f, 0));
+        //Draws wall jump box
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + wallGrabBoxOffsetX, playerTransform.position.y + wallGrabBoxPosY, playerTransform.position.z), new Vector3(0.1f, wallGrabBoxHightY, 0));
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + wallGrabBoxOffsetX * -1, playerTransform.position.y + wallGrabBoxPosY, playerTransform.position.z), new Vector3(0.1f, wallGrabBoxHightY, 0));
