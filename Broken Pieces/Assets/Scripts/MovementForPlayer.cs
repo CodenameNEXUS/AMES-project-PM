@@ -196,6 +196,11 @@ public class MovementForPlayer : MonoBehaviour
         {
             lastFrameSpeedMask = false;
         }
+        //Sets max speed when switching off speed mask
+        if (timer7SMSB < 0.5 && isGrounded)
+        {
+            trueMaxSpeed = maxSpeed * speedCapMultiplacation;
+        }
         //Check if player is in contact with wall
         wallJumpBoxContactR = Physics2D.OverlapBox(new Vector2(playerTransform.position.x + wallGrabBoxOffsetX, playerTransform.position.y + wallGrabBoxPosY), new Vector2(0.1f, wallGrabBoxHightY), 0f, layerOfGround);
         wallJumpBoxContactL = Physics2D.OverlapBox(new Vector2(playerTransform.position.x + wallGrabBoxOffsetX * -1, playerTransform.position.y + wallGrabBoxPosY), new Vector2(0.1f, wallGrabBoxHightY), 0f, layerOfGround);
