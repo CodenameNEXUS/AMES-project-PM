@@ -2,32 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class MovementForPlayer : MonoBehaviour
 {
     [Header("BasicConfig")]
-    [SerializeField] private float groundCheckWidth = 0.3f; //Width of ground check box
-    [SerializeField] private float groundCheckOffsetY = 0.5f; //Y offset of ground check box
+    [SerializeField] private float groundCheckWidth = 0.75f; //Width of ground check box
+    [SerializeField] private float groundCheckOffsetY = 0.1f; //Y offset of ground check box
     [SerializeField] private float wallGrabBoxPosY = 0; //Y Position of wall grab box
     [SerializeField] private float wallGrabBoxOffsetX = 0.55f; //X offset from the center of player for wall grab box
     [SerializeField] private float wallGrabBoxHightY = 0.5f; //Y hight of wall grab box
     [SerializeField] private LayerMask layerOfGround; //Layer that the ground is on
     [SerializeField] private Transform playerTransform; // Transform for ground check position
+    [SerializeField] private bool playerCanDiagonalDash = true; //Toggles weather player can do a diagonal dash
+    [SerializeField] private bool playerCanUseSpeedMask = true;
+    [SerializeField] private bool playerCanUseJumpMask = true;
+    [SerializeField] private bool playerCanUseDashMask = true;
+    [SerializeField] private SpriteRenderer speedMask;
+    [SerializeField] private SpriteRenderer jumpMask;
+    [SerializeField] private SpriteRenderer dashMask;
 
     [Header("Player Base Stats")]
     [SerializeField] private float maxSpeed = 6f; //Max base speed of player outside of dashing
-    [SerializeField] private float acceleration = 2f; //Base player acceleration
-    [SerializeField] private float jumpForce = 4f; //Base player jump force
+    [SerializeField] private float acceleration = 0.5f; //Base player acceleration
+    [SerializeField] private float jumpForce = 8f; //Base player jump force
     [SerializeField] private float extraFallGravity = 0.5f; //The amount of exta gravity added to the player when falling and not holding the jump button
 
     [Header("Mask Modifers")]
     [SerializeField] private float speedCapMultiplacation = 2f;
     [SerializeField] private float accelerationMultiplaction = 2f;
-    [SerializeField] private float jumpMultiplacation = 2f;
+    [SerializeField] private float jumpMultiplacation = 1.5f;
     [SerializeField] private float dashSpeed = 10f;
+    [SerializeField] private float dashDuration = 0.06f;
 
-    public bool canDash = false;
+    public bool canDashDONOTCHANGEINEDITOR = false;
     bool pressedDash = false;
     bool isGrounded = false;
     bool velCap = true;
@@ -39,6 +48,7 @@ public class MovementForPlayer : MonoBehaviour
     bool wallHangL = false;
     bool wallHangR = false;
     bool holdingJump = false;
+    bool lastFrameSpeedMask;
     Rigidbody2D rb;
     Transform trans;
     float defaultGravScale;
@@ -47,6 +57,8 @@ public class MovementForPlayer : MonoBehaviour
     float timer3WJ = 10;
     float timer4VC = 0;
     float timer5NGF = 0;
+    float timer6DB = 10;
+    float timer7SMSB = 10;
     float finalAccelc;
     float finalSpeedCap;
 
@@ -69,6 +81,9 @@ public class MovementForPlayer : MonoBehaviour
     SpriteRenderer SpriteDashMask;
     void Start()
     {
+        speedMask.enabled = false;
+        jumpMask.enabled = false;
+        dashMask.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         trans = GetComponent<Transform>();
         defaultGravScale = rb.gravityScale;
@@ -81,31 +96,50 @@ public class MovementForPlayer : MonoBehaviour
             timer1JB = 0;
         }
         //Mask state change code
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && playerCanUseJumpMask)
         {
             Debug.Log("Jump Mask Active");
+            speedMask.enabled = false;
+            jumpMask.enabled = true;
+            dashMask.enabled = false;
             maskState1S = false;
             maskState2J = true;
             maskState3D = false;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) && playerCanUseSpeedMask)
         {
             Debug.Log("Speed Mask Active");
+            speedMask.enabled = true;
+            jumpMask.enabled = false;
+            dashMask.enabled = false;
             maskState1S = true;
             maskState2J = false;
             maskState3D = false;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && playerCanUseDashMask)
         {
             Debug.Log("Dash Mask Active");
+            speedMask.enabled = false;
+            jumpMask.enabled = false;
+            dashMask.enabled = true;
             maskState1S = false;
             maskState2J = false;
             maskState3D = true;
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log("Unequipted Mask");
+            speedMask.enabled = false;
+            jumpMask.enabled = false;
+            dashMask.enabled = false;
+            maskState1S = false;
+            maskState2J = false;
+            maskState3D = false;
+        }
         //Hanles player dash
         if (maskState3D && !isGrounded && Input.GetKeyDown(KeyCode.Z) && !haningOnWall)
         {
-            pressedDash = true;
+            timer6DB = 0;
         }
     }
     void FixedUpdate()
@@ -129,13 +163,15 @@ public class MovementForPlayer : MonoBehaviour
         {
             trueJumpForce = jumpForce;
         }
-            //Checks if player is holding jump key
-            holdingJump = Input.GetKey(KeyCode.Z);
+        //Checks if player is holding jump key
+        holdingJump = Input.GetKey(KeyCode.Z);
         //timers
         timer1JB += Time.deltaTime;
         timer2JB += Time.deltaTime;
         timer3WJ += Time.deltaTime;
         timer4VC -= Time.deltaTime;
+        timer6DB += Time.deltaTime;
+        timer7SMSB += Time.deltaTime;
         //Check if player is in contact with ground
         isGrounded = Physics2D.OverlapBox(new Vector2(playerTransform.position.x, playerTransform.position.y - groundCheckOffsetY), new Vector2(groundCheckWidth, 0.1f), 0f, layerOfGround);
         //Only ticks timer if not grounded
@@ -144,8 +180,21 @@ public class MovementForPlayer : MonoBehaviour
             timer5NGF += Time.deltaTime;
         } else
         {
-            canDash = true;
+            canDashDONOTCHANGEINEDITOR = true;
             timer5NGF = 0;
+        }
+        //Resets timer when switching of speed mask (for vel cap)
+        if (lastFrameSpeedMask && !maskState1S)
+        {
+            timer7SMSB = 0;
+        }
+        if (maskState1S)
+        {
+            lastFrameSpeedMask = true;
+        }
+        else
+        {
+            lastFrameSpeedMask = false;
         }
         //Check if player is in contact with wall
         wallJumpBoxContactR = Physics2D.OverlapBox(new Vector2(playerTransform.position.x + wallGrabBoxOffsetX, playerTransform.position.y + wallGrabBoxPosY), new Vector2(0.1f, wallGrabBoxHightY), 0f, layerOfGround);
@@ -168,7 +217,7 @@ public class MovementForPlayer : MonoBehaviour
         //Handels haning on wall
         if (Input.GetKey(KeyCode.LeftArrow) && wallJumpBoxContactL && !ran2)
         {
-            canDash = true;
+            canDashDONOTCHANGEINEDITOR = true;
             ran1 = false;
             ran2 = true;
             ran3 = false;
@@ -180,7 +229,7 @@ public class MovementForPlayer : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow) && wallJumpBoxContactR && !ran2)
         {
-            canDash = true;
+            canDashDONOTCHANGEINEDITOR = true;
             ran1 = false;
             ran2 = true;
             ran3 = false;
@@ -270,16 +319,29 @@ public class MovementForPlayer : MonoBehaviour
             lastFrameGrounded = true;
         }
         //Handles dash condition
-        if (pressedDash && canDash)
+        if (timer6DB < 0.1 && canDashDONOTCHANGEINEDITOR)
         {
-            pressedDash = false;
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.UpArrow)|| Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.UpArrow))
             {
-                Dash(true, false);
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    Dash(true, false);
+                }
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    Dash(false, false);
+                }
+
+            } else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.UpArrow) && playerCanDiagonalDash|| Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.UpArrow) && playerCanDiagonalDash)
             {
-                Dash(false, false);
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    Dash(true, true);
+                }
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    Dash(false, true);
+                }
             }
         }
     }
@@ -291,16 +353,16 @@ public class MovementForPlayer : MonoBehaviour
     void Dash(bool goingRight, bool digionalJump)
     {
         Debug.Log("Dashed");
-        canDash = false;
+        canDashDONOTCHANGEINEDITOR = false;
         if (goingRight)
         {
             rb.velocity = new Vector2(dashSpeed * 5, rb.velocity.y);
-            timer4VC = 0.05f;
+            timer4VC = dashDuration;
         }
         if (!goingRight)
         {
             rb.velocity = new Vector2(dashSpeed * -5, rb.velocity.y);
-            timer4VC = 0.05f;
+            timer4VC = dashDuration;
         }
         if (digionalJump)
         {
