@@ -16,10 +16,10 @@ public class MovementForPlayer : MonoBehaviour
     [SerializeField] private LayerMask layerOfGround; //Layer that the ground is on
     [SerializeField] private Transform playerTransform; // Transform for ground check position
     [SerializeField] private bool playerCanDiagonalDash = true; //Toggles weather player can do a diagonal dash
-    [SerializeField] private bool playerCanUseSpeedMask = true;
+    [SerializeField] private bool playerCanUseSpeedMask = true; //bools for toggleing weather the player can use a specif mask
     [SerializeField] private bool playerCanUseJumpMask = true;
     [SerializeField] private bool playerCanUseDashMask = true;
-    [SerializeField] private SpriteRenderer speedMask;
+    [SerializeField] private SpriteRenderer speedMask; //the sprite renderers for the masks
     [SerializeField] private SpriteRenderer jumpMask;
     [SerializeField] private SpriteRenderer dashMask;
 
@@ -37,7 +37,6 @@ public class MovementForPlayer : MonoBehaviour
     [SerializeField] private float dashDuration = 0.06f;
 
     public bool canDashDONOTCHANGEINEDITOR = false;
-    bool pressedDash = false;
     bool isGrounded = false;
     bool velCap = true;
     bool lastFrameGrounded = false;
@@ -66,19 +65,15 @@ public class MovementForPlayer : MonoBehaviour
     float trueAccel;
     float trueMaxSpeed;
     float trueJumpForce;
-
+    //ran bools
     bool ran1 = false;
     bool ran2 = false;
     bool ran3 = false;
     bool ran4 = false;
-
+    //bools for different mask states
     bool maskState1S = false;
     bool maskState2J = false;
     bool maskState3D = false;
-
-    SpriteRenderer SpriteSpeedMask;
-    SpriteRenderer SpriteJumpMask;
-    SpriteRenderer SpriteDashMask;
     void Start()
     {
         speedMask.enabled = false;
