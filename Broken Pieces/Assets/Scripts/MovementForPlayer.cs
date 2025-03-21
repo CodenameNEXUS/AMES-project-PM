@@ -28,6 +28,7 @@ public class MovementForPlayer : MonoBehaviour
     [SerializeField] private float acceleration = 0.5f; //Base player acceleration
     [SerializeField] private float jumpForce = 8f; //Base player jump force
     [SerializeField] private float extraFallGravity = 0.5f; //The amount of exta gravity added to the player when falling and not holding the jump button
+    [SerializeField] private float groundSpeedFalloff = 0.8f;
 
     [Header("Mask Modifers")]
     [SerializeField] private float speedCapMultiplacation = 2f;
@@ -56,7 +57,6 @@ public class MovementForPlayer : MonoBehaviour
     float timer2JB = 10;
     float timer3WJ = 10;
     float timer4VC = 0;
-    float timer5NGF = 0;
     float timer6DB = 10;
     float timer7SMSB = 10;
     float finalAccelc;
@@ -171,13 +171,9 @@ public class MovementForPlayer : MonoBehaviour
         //Check if player is in contact with ground
         isGrounded = Physics2D.OverlapBox(new Vector2(playerTransform.position.x, playerTransform.position.y - groundCheckOffsetY), new Vector2(groundCheckWidth, 0.1f), 0f, layerOfGround);
         //Only ticks timer if not grounded
-        if (!isGrounded)
-        {
-            timer5NGF += Time.deltaTime;
-        } else
+        if (isGrounded)
         {
             canDash = true;
-            timer5NGF = 0;
         }
         //Resets timer when switching of speed mask (for vel cap)
         if (lastFrameSpeedMask && !maskState1S)
@@ -253,7 +249,7 @@ public class MovementForPlayer : MonoBehaviour
             rb.velocity = Vector2.zero;
             Debug.Log("wallClingR");
         }
-        if (wallHangR && !Input.GetKey(KeyCode.RightArrow) && !ran1 || wallHangL && !Input.GetKey(KeyCode.LeftArrow) && !ran1 || ran3 && !ran1)
+        if (wallHangR && !Input.GetKey(KeyCode.RightArrow) && !ran1 || wallHangL && !Input.GetKey(KeyCode.LeftArrow) && !ran1 || ran3 && !ran1 || !ran1 && !wallJumpBoxContactL && !wallJumpBoxContactR)
         {
             wallHangL = false;
             wallHangR = false;
@@ -357,6 +353,10 @@ public class MovementForPlayer : MonoBehaviour
                 }
             }
         }
+        if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && isGrounded)
+        {
+            rb.velocity = new Vector2 (rb.velocity.x * groundSpeedFalloff, rb.velocity.y);
+        }
     }
     void Jump()
     {
@@ -369,17 +369,25 @@ public class MovementForPlayer : MonoBehaviour
         canDash = false;
         if (goingRight)
         {
-            rb.velocity = new Vector2(dashSpeed * 5, rb.velocity.y);
+            rb.velocity = new Vector2(dashSpeed * 5, 0.5f);
             timer4VC = dashDuration;
         }
         if (!goingRight)
         {
-            rb.velocity = new Vector2(dashSpeed * -5, rb.velocity.y);
+            rb.velocity = new Vector2(dashSpeed * -5, 0.5f);
             timer4VC = dashDuration;
         }
         if (digionalJump)
         {
-            rb.velocity = new Vector2(rb.velocity.x, dashSpeed * 5);
+            rb.velocity = new Vector2((rb.velocity.x/5) * 2f, dashSpeed * 2f);
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 3 && timer4VC > -0.1 && !canDash)
+        {
+            Debug.Log("hit wall wile dashing");
+            rb.velocity = Vector2.zero;
         }
     }
     private void OnDrawGizmos()
