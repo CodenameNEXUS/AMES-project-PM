@@ -35,23 +35,24 @@ public class MovementForPlayer : MonoBehaviour
     [SerializeField] private float jumpMultiplacation = 1.5f;
     [SerializeField] private float dashSpeed = 10f;
     [SerializeField] private float dashDuration = 0.06f;
-
-    public bool canDashDONOTCHANGEINEDITOR = false;
-    bool isGrounded = false;
+    [Header("DONT CHANGE IN EDITOR THIS STUFF IS FOR ANIMATION CONTROL")]
+    public bool canDash = false;
+    public bool isGrounded = false;
     bool velCap = true;
     bool lastFrameGrounded = false;
     bool jumped = false;
     bool wallJumpBoxContactL = false;
     bool wallJumpBoxContactR = false;
     bool haningOnWall = false;
-    bool wallHangL = false;
-    bool wallHangR = false;
+    public bool wallHangL = false;
+    public bool wallHangR = false;
     bool holdingJump = false;
     bool lastFrameSpeedMask;
+    bool runningCode = false;
     Rigidbody2D rb;
     Transform trans;
     float defaultGravScale;
-    float timer1JB = 10;
+    public float timer1JB = 10;
     float timer2JB = 10;
     float timer3WJ = 10;
     float timer4VC = 0;
@@ -175,7 +176,7 @@ public class MovementForPlayer : MonoBehaviour
             timer5NGF += Time.deltaTime;
         } else
         {
-            canDashDONOTCHANGEINEDITOR = true;
+            canDash = true;
             timer5NGF = 0;
         }
         //Resets timer when switching of speed mask (for vel cap)
@@ -193,6 +194,19 @@ public class MovementForPlayer : MonoBehaviour
         }
         //Sets max speed when switching off speed mask
         if (timer7SMSB < 0.5 && isGrounded)
+        {
+            trueMaxSpeed = maxSpeed * speedCapMultiplacation;
+        }
+        //Keeps top speed at speed mask cap wile in air and switched off speed mask
+        if (timer1JB < 0.05 && !maskState1S && trueMaxSpeed == speedCapMultiplacation * maxSpeed)
+        {
+            runningCode = true;
+        }
+        if (runningCode && isGrounded && timer1JB >= 0.05)
+        {
+            runningCode = false;
+        }
+        if (runningCode)
         {
             trueMaxSpeed = maxSpeed * speedCapMultiplacation;
         }
@@ -217,7 +231,7 @@ public class MovementForPlayer : MonoBehaviour
         //Handels haning on wall
         if (Input.GetKey(KeyCode.LeftArrow) && wallJumpBoxContactL && !ran2)
         {
-            canDashDONOTCHANGEINEDITOR = true;
+            canDash = true;
             ran1 = false;
             ran2 = true;
             ran3 = false;
@@ -229,7 +243,7 @@ public class MovementForPlayer : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow) && wallJumpBoxContactR && !ran2)
         {
-            canDashDONOTCHANGEINEDITOR = true;
+            canDash = true;
             ran1 = false;
             ran2 = true;
             ran3 = false;
@@ -279,7 +293,6 @@ public class MovementForPlayer : MonoBehaviour
             rb.velocity = new Vector2(trueMaxSpeed * -1, rb.velocity.y);
             //rb.velocity = new Vector2(rb.velocity.x * 0.92f, rb.velocity.y);
         }
-
         //Handles player jump condition
         if (timer1JB < 0.05 && (isGrounded || timer2JB < 0.1 && !jumped)) 
         {
@@ -319,7 +332,7 @@ public class MovementForPlayer : MonoBehaviour
             lastFrameGrounded = true;
         }
         //Handles dash condition
-        if (timer6DB < 0.1 && canDashDONOTCHANGEINEDITOR)
+        if (timer6DB < 0.1 && canDash)
         {
             if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.UpArrow)|| Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.UpArrow))
             {
@@ -353,7 +366,7 @@ public class MovementForPlayer : MonoBehaviour
     void Dash(bool goingRight, bool digionalJump)
     {
         Debug.Log("Dashed");
-        canDashDONOTCHANGEINEDITOR = false;
+        canDash = false;
         if (goingRight)
         {
             rb.velocity = new Vector2(dashSpeed * 5, rb.velocity.y);
