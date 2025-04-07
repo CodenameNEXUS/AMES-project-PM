@@ -16,9 +16,9 @@ public class MovementForPlayer : MonoBehaviour
     [SerializeField] private LayerMask layerOfGround; //Layer that the ground is on
     [SerializeField] private Transform playerTransform; // Transform for ground check position
     [SerializeField] private bool playerCanDiagonalDash = true; //Toggles weather player can do a diagonal dash
-    [SerializeField] private bool playerCanUseSpeedMask = true; //bools for toggleing weather the player can use a specif mask
-    [SerializeField] private bool playerCanUseJumpMask = true;
-    [SerializeField] private bool playerCanUseDashMask = true;
+    public bool playerCanUseSpeedMask = true; //bools for toggleing weather the player can use a specif mask
+    public bool playerCanUseJumpMask = true;
+    public bool playerCanUseDashMask = true;
     [SerializeField] private SpriteRenderer speedMask; //the sprite renderers for the masks
     [SerializeField] private SpriteRenderer jumpMask;
     [SerializeField] private SpriteRenderer dashMask;
