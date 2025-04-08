@@ -306,7 +306,7 @@ MonoBehaviour:
   giveDashMask: 0
   maskIdle: 1
   maskIdleDistance: 0.1
-  masIdleSpeed: 1
+  maskIdleSpeed: 0.5
   speedMask: {fileID: 512532559988023877}
   jumpMask: {fileID: 9008902258374922514}
   dashMask: {fileID: 1553915081466084205}
