@@ -36,6 +36,7 @@ public class MaskPickup : MonoBehaviour
         dashMaskTRA = dashMask.transform;
         noneSlectedTRA = noneSlected.transform;
         yPosOfObject = transform.position.y;
+        currentOffset = yPosOfObject;
         if (giveSpeedMask && !giveJumpMask && !giveDashMask)
         {
             speedMaskSPR.enabled = true;
