@@ -60,6 +60,8 @@ public class TestMovementForPlayer : MonoBehaviour
     float timer7SMSB = 10;
     float finalAccelc;
     float finalSpeedCap;
+    
+    bool onDaig = false;
 
     //floats for actively applyed stats
     float trueAccel;
@@ -169,6 +171,23 @@ public class TestMovementForPlayer : MonoBehaviour
         timer7SMSB += Time.deltaTime;
         //Check if player is in contact with ground
         isGrounded = Physics2D.OverlapBox(new Vector2(playerTransform.position.x, playerTransform.position.y - groundCheckOffsetY), new Vector2(groundCheckWidth, 0.1f), 0f, layerOfGround);
+        //Handes going up ramps
+        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround) || Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
+        {
+            onDaig = true;
+        }
+        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround) && !Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
+        {
+            onDaig = false;
+        }
+        if (isGrounded && onDaig && !haningOnWall && Input.GetKey(KeyCode.LeftArrow) || isGrounded && onDaig && !haningOnWall && Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 0.3f);
+        }
+        if (isGrounded && onDaig && !haningOnWall && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0.3f);
+        }
         //Only ticks timer if not grounded
         if (isGrounded)
         {
@@ -398,5 +417,8 @@ public class TestMovementForPlayer : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + wallGrabBoxOffsetX, playerTransform.position.y + wallGrabBoxPosY, playerTransform.position.z), new Vector3(0.1f, wallGrabBoxHightY, 0));
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + wallGrabBoxOffsetX * -1, playerTransform.position.y + wallGrabBoxPosY, playerTransform.position.z), new Vector3(0.1f, wallGrabBoxHightY, 0));
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1 , playerTransform.position.y - groundCheckOffsetY + 0.15f, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
+        Gizmos.DrawWireCube(new Vector3(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
     }
 }
