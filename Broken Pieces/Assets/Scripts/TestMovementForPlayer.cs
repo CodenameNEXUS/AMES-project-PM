@@ -18,6 +18,7 @@ public class TestMovementForPlayer : MonoBehaviour
     public bool playerCanUseSpeedMask = true; //bools for toggleing weather the player can use a specif mask
     public bool playerCanUseJumpMask = true;
     public bool playerCanUseDashMask = true;
+    public bool playerCanWallHang = true;
     [SerializeField] private SpriteRenderer speedMask; //the sprite renderers for the masks
     [SerializeField] private SpriteRenderer jumpMask;
     [SerializeField] private SpriteRenderer dashMask;
@@ -243,7 +244,7 @@ public class TestMovementForPlayer : MonoBehaviour
             velCap = false;
         }
         //Handels haning on wall
-        if (Input.GetKey(KeyCode.LeftArrow) && wallJumpBoxContactL && !ran2)
+        if (Input.GetKey(KeyCode.LeftArrow) && wallJumpBoxContactL && !ran2 && playerCanWallHang)
         {
             canDash = true;
             ran1 = false;
@@ -255,7 +256,7 @@ public class TestMovementForPlayer : MonoBehaviour
             rb.velocity = Vector2.zero;
             Debug.Log("wallClingL");
         }
-        if (Input.GetKey(KeyCode.RightArrow) && wallJumpBoxContactR && !ran2)
+        if (Input.GetKey(KeyCode.RightArrow) && wallJumpBoxContactR && !ran2 && playerCanWallHang)
         {
             canDash = true;
             ran1 = false;
