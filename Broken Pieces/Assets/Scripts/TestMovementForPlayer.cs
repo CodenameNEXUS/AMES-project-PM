@@ -257,7 +257,7 @@ public class TestMovementForPlayer : MonoBehaviour
             velCap = false;
         }
         //Handels haning on wall
-        if (Input.GetKey(KeyCode.LeftArrow) && wallJumpBoxContactL && !ran2 && playerCanWallHang)
+        if (Input.GetKey(KeyCode.LeftArrow) && wallJumpBoxContactL && !ran2 && playerCanWallHang && !isGrounded && timer1JB > 0.5f)
         {
             canDash = true;
             ran1 = false;
@@ -269,7 +269,7 @@ public class TestMovementForPlayer : MonoBehaviour
             rb.velocity = Vector2.zero;
             Debug.Log("wallClingL");
         }
-        if (Input.GetKey(KeyCode.RightArrow) && wallJumpBoxContactR && !ran2 && playerCanWallHang)
+        if (Input.GetKey(KeyCode.RightArrow) && wallJumpBoxContactR && !ran2 && playerCanWallHang && !isGrounded && timer1JB > 0.5f)
         {
             canDash = true;
             ran1 = false;
@@ -434,5 +434,7 @@ public class TestMovementForPlayer : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1 , playerTransform.position.y - groundCheckOffsetY + 0.15f, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y - groundCheckOffsetY, transform.position.z), -Vector3.up);
     }
 }
