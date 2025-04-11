@@ -62,7 +62,8 @@ public class TestMovementForPlayer : MonoBehaviour
     float finalAccelc;
     float finalSpeedCap;
     
-    bool onDaig = false;
+    bool onDaigL = false;
+    bool onDaigR = false;
 
     //floats for actively applyed stats
     float trueAccel;
@@ -173,19 +174,31 @@ public class TestMovementForPlayer : MonoBehaviour
         //Check if player is in contact with ground
         isGrounded = Physics2D.OverlapBox(new Vector2(playerTransform.position.x, playerTransform.position.y - groundCheckOffsetY), new Vector2(groundCheckWidth, 0.1f), 0f, layerOfGround);
         //Handes going up ramps
-        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround) || Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
+        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround))
         {
-            onDaig = true;
+            onDaigL = true;
         }
-        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround) && !Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
+        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
         {
-            onDaig = false;
+            onDaigR = true;
         }
-        if (isGrounded && onDaig && !haningOnWall && Input.GetKey(KeyCode.LeftArrow) || isGrounded && onDaig && !haningOnWall && Input.GetKey(KeyCode.RightArrow))
+        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround))
+        {
+            onDaigL = false;
+        }
+        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
+        {
+            onDaigR = false;
+        }
+        if (isGrounded && onDaigL && !haningOnWall && Input.GetKey(KeyCode.LeftArrow))
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 0.3f);
         }
-        if (isGrounded && onDaig && !haningOnWall && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        if (isGrounded && onDaigR && !haningOnWall && Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 0.3f);
+        }
+        if (isGrounded && (onDaigR || onDaigL) && !haningOnWall && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
             rb.velocity = new Vector2(rb.velocity.x, 0.3f);
         }
