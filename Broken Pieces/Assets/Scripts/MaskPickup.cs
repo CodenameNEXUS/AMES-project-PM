@@ -86,20 +86,23 @@ public class MaskPickup : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && collision.gameObject.GetComponent<MovementForPlayer>() != null)
+        if (collision.tag == "Player" && collision.gameObject.GetComponent<TestMovementForPlayer>() != null)
         {
-            MovementForPlayer playerMovementScript = collision.gameObject.GetComponent<MovementForPlayer>();
+            TestMovementForPlayer playerMovementScript = collision.gameObject.GetComponent<TestMovementForPlayer>();
             if (giveSpeedMask)
             { 
                 playerMovementScript.playerCanUseSpeedMask = true;
+                Debug.Log("Player Got Speed Mask");
             }
             if (giveJumpMask)
             {
                 playerMovementScript.playerCanUseJumpMask = true;
+                Debug.Log("Player Got Jump Mask");
             }
             if (giveDashMask)
             {
                 playerMovementScript.playerCanUseDashMask = true;
+                Debug.Log("Player Got Dash Mask");
             }
             if (!runTheCodeOfShame)
             {

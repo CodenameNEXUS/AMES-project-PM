@@ -6088,8 +6088,12 @@ CompositeCollider2D:
         Y: -18400000
       - X: 530000000
         Y: -20000000
-      - X: 340000000
+      - X: 331200000
         Y: -20000000
+      - X: 332800000
+        Y: -18800000
+      - X: 340000000
+        Y: -11600000
       - X: 340000000
         Y: 31600000
       - X: 332800000
@@ -6372,7 +6376,9 @@ CompositeCollider2D:
       - {x: 53.839993, y: -1.0000076}
       - {x: 53, y: -1.8400108}
       - {x: 52.999973, y: -2}
-      - {x: 34, y: -1.9999707}
+      - {x: 33.12009, y: -1.9999316}
+      - {x: 33.28, y: -1.8799984}
+      - {x: 34, y: -1.1599892}
       - {x: 33.999992, y: 3.1600077}
       - {x: 33.28, y: 3.8800008}
       - {x: 33.11999, y: 4}
@@ -46345,8 +46351,8 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 10
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -47698,7 +47704,7 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 61
     m_Data: {fileID: -1649775817, guid: 1dec1a2597197144c89659f4b70a0c1b, type: 3}
-  - m_RefCount: 3615
+  - m_RefCount: 3614
     m_Data: {fileID: -1686905706, guid: 1dec1a2597197144c89659f4b70a0c1b, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 1845508539, guid: 1dec1a2597197144c89659f4b70a0c1b, type: 3}
@@ -47738,14 +47744,14 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: -1833022198, guid: 6284110482b7502429463c0e1ad8bba0, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 724776973, guid: 67c068669176d7d4ea3146e41657d681, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1646105242, guid: 67c068669176d7d4ea3146e41657d681, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 4104
+  - m_RefCount: 4103
     m_Data:
       e00: 1
       e01: 0
@@ -47757,6 +47763,24 @@ Tilemap:
       e13: 0
       e20: 0
       e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - m_RefCount: 1
+    m_Data:
+      e00: 1
+      e01: -0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: -1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: -0
       e22: 1
       e23: 0
       e30: 0
@@ -48570,6 +48594,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
+      propertyPath: playerCanUseDashMask
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
+      propertyPath: playerCanUseJumpMask
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
+      propertyPath: playerCanUseSpeedMask
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5411188020749240822, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
       propertyPath: m_Name
       value: Player
