@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CheckpointMannager : MonoBehaviour
 {
-    Vector3 respawnPoint;
-    GameObject player;
+    static Vector3 respawnPoint;
+    static GameObject player;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -18,7 +18,7 @@ public class CheckpointMannager : MonoBehaviour
             RespawnFromCheckpoint();
         }
     }
-    public void RespawnFromCheckpoint()
+    static public void RespawnFromCheckpoint()
     {
         if (respawnPoint != Vector3.zero)
         {
@@ -31,7 +31,7 @@ public class CheckpointMannager : MonoBehaviour
             Debug.Log("No Checkpoint Found, Reloading Scene");
         }
     }
-    public void SetCheckPoint(Transform checkpointTransform)
+    static public void SetNewCheckPoint(Transform checkpointTransform)
     {
         respawnPoint = checkpointTransform.position;
     }

@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Checkpoints : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
-    [Header("Select The Desired mask")]
-    [SerializeField] private bool maskIdle = true;
-    [SerializeField] private float maskIdleDistance = 0.1f;
-    [SerializeField] private float maskIdleSpeed = 1.0f;
+    [SerializeField] private float IdleDistance = 0.1f;
+    [SerializeField] private float IdleSpeed = 1.0f;
     [SerializeField] private GameObject checkpointClaimed;
     [SerializeField] private GameObject checkpointNotClaimed;
     private float yPosOfObject;
@@ -16,6 +14,7 @@ public class Checkpoints : MonoBehaviour
     private SpriteRenderer notClaimedSPR;
     private SpriteRenderer claimedSPR;
     private bool up = true;
+    private bool claimed = false;
     float currentOffset = 0;
     void Start()
     {
@@ -28,24 +27,35 @@ public class Checkpoints : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (currentOffset >= yPosOfObject + maskIdleDistance)
+        if (currentOffset >= yPosOfObject + IdleDistance)
         {
             up = false;
         }
-        else if (currentOffset <= yPosOfObject - maskIdleDistance)
+        else if (currentOffset <= yPosOfObject - IdleDistance)
         {
             up = true;
         }
         if (up)
         {
-            currentOffset = currentOffset + maskIdleSpeed * 0.01f;
+            currentOffset = currentOffset + IdleSpeed * 0.01f;
         }
         else if (!up)
         {
-            currentOffset = currentOffset - maskIdleSpeed * 0.01f;
+            currentOffset = currentOffset - IdleSpeed * 0.01f;
         }
         notClaimedTRA.position = new Vector3(gameObject.transform.position.x, currentOffset, gameObject.transform.position.z);
         claimedTRA.position = new Vector3(gameObject.transform.position.x, currentOffset, gameObject.transform.position.z);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && !claimed)
+        {
+            claimed = true;
+            Debug.Log("New Checkpoint Claimed");
+            notClaimedSPR.enabled = false;
+            claimedSPR.enabled = true;
+            CheckpointMannager.SetNewCheckPoint(gameObject.transform);
+        }
     }
 
 }

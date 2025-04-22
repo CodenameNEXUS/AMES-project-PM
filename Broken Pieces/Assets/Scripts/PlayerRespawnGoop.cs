@@ -9,7 +9,7 @@ public class PlayerRespawnGoop : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            CheckpointMannager.RespawnFromCheckpoint();
         }
     }
 }
