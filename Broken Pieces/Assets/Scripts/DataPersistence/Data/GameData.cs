@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public int currentLevel;
+    public string currentLevel;
 
     //Values defined here will be the default values
     public GameData()
     {
-        this.currentLevel = 0;
+        this.currentLevel = "Level 1";
     }
 }
