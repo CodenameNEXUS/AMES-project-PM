@@ -239,8 +239,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: 0, y: -0.26366043}
+  m_Size: {x: 0.45751953, y: 1.3892136}
   m_Direction: 0
 --- !u!50 &8526578667236206274
 Rigidbody2D:
@@ -281,11 +281,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c1d4436fe1b2742945b25ee1ad1f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckWidth: 0.75
-  groundCheckOffsetY: 1
-  wallGrabBoxPosY: 0.05
-  wallGrabBoxOffsetX: 0.5
-  wallGrabBoxHightY: 0.5
+  groundCheckWidth: 0.32
+  groundCheckOffsetY: 0.95
+  wallGrabBoxPosY: -0.24
+  wallGrabBoxOffsetX: 0.22
+  wallGrabBoxHightY: 0.48
   layerOfGround:
     serializedVersion: 2
     m_Bits: 8
