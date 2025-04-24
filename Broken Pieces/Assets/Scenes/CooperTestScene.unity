@@ -48822,16 +48822,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      propertyPath: playerCanUseDashMask
-      value: 0
+      propertyPath: diagonalBoxOffsetX
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      propertyPath: playerCanUseJumpMask
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      propertyPath: playerCanUseSpeedMask
-      value: 0
+      propertyPath: diagonalBoxOffsetY
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 5411188020749240822, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
       propertyPath: m_Name

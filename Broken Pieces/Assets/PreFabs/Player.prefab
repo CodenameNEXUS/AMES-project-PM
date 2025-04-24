@@ -286,14 +286,16 @@ MonoBehaviour:
   wallGrabBoxPosY: -0.24
   wallGrabBoxOffsetX: 0.22
   wallGrabBoxHightY: 0.48
+  diagonalBoxOffsetX: 0.06
+  diagonalBoxOffsetY: 0.09
   layerOfGround:
     serializedVersion: 2
     m_Bits: 8
   playerTransform: {fileID: 6531368703453553640}
   playerCanDiagonalDash: 1
-  playerCanUseSpeedMask: 1
-  playerCanUseJumpMask: 1
-  playerCanUseDashMask: 1
+  playerCanUseSpeedMask: 0
+  playerCanUseJumpMask: 0
+  playerCanUseDashMask: 0
   playerCanWallHang: 1
   speedMask: {fileID: 1219776047845835471}
   jumpMask: {fileID: 4991385132983329135}

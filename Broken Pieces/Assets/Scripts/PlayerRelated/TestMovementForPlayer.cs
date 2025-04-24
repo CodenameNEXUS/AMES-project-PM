@@ -12,6 +12,8 @@ public class TestMovementForPlayer : MonoBehaviour
     [SerializeField] private float wallGrabBoxPosY = 0; //Y Position of wall grab box
     [SerializeField] private float wallGrabBoxOffsetX = 0.55f; //X offset from the center of player for wall grab box
     [SerializeField] private float wallGrabBoxHightY = 0.5f; //Y hight of wall grab box
+    [SerializeField] private float diagonalBoxOffsetX = 0.13f; //X offset of the diagonal boxes
+    [SerializeField] private float diagonalBoxOffsetY = 0.15f; //Y offset of the diagonal boxes
     [SerializeField] private LayerMask layerOfGround; //Layer that the ground is on
     [SerializeField] private Transform playerTransform; // Transform for ground check position
     [SerializeField] private bool playerCanDiagonalDash = true; //Toggles weather player can do a diagonal dash
@@ -174,19 +176,19 @@ public class TestMovementForPlayer : MonoBehaviour
         //Check if player is in contact with ground
         isGrounded = Physics2D.OverlapBox(new Vector2(playerTransform.position.x, playerTransform.position.y - groundCheckOffsetY), new Vector2(groundCheckWidth, 0.1f), 0f, layerOfGround);
         //Handes going up ramps
-        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround))
+        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x + diagonalBoxOffsetX + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + diagonalBoxOffsetY), new Vector2(0.1f, 0.1f), 0f, layerOfGround))
         {
             onDaigL = true;
         }
-        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
+        if (Physics2D.OverlapBox(new Vector2(playerTransform.position.x - diagonalBoxOffsetX + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + diagonalBoxOffsetY), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
         {
             onDaigR = true;
         }
-        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector2(0.1f, 0.1f), 0f, layerOfGround))
+        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x + diagonalBoxOffsetX + wallGrabBoxOffsetX * -1, playerTransform.position.y - groundCheckOffsetY + diagonalBoxOffsetY), new Vector2(0.1f, 0.1f), 0f, layerOfGround))
         {
             onDaigL = false;
         }
-        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
+        if (!Physics2D.OverlapBox(new Vector2(playerTransform.position.x - diagonalBoxOffsetX + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + diagonalBoxOffsetY), new Vector3(0.1f, 0.1f), 0f, layerOfGround))
         {
             onDaigR = false;
         }
@@ -202,7 +204,6 @@ public class TestMovementForPlayer : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, 0.3f);
         }
-        //Only ticks timer if not grounded
         if (isGrounded)
         {
             canDash = true;
@@ -432,8 +433,8 @@ public class TestMovementForPlayer : MonoBehaviour
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + wallGrabBoxOffsetX, playerTransform.position.y + wallGrabBoxPosY, playerTransform.position.z), new Vector3(0.1f, wallGrabBoxHightY, 0));
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + wallGrabBoxOffsetX * -1, playerTransform.position.y + wallGrabBoxPosY, playerTransform.position.z), new Vector3(0.1f, wallGrabBoxHightY, 0));
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + 0.13f + wallGrabBoxOffsetX * -1 , playerTransform.position.y - groundCheckOffsetY + 0.15f, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
-        Gizmos.DrawWireCube(new Vector3(playerTransform.position.x - 0.13f + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + 0.15f, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
+        Gizmos.DrawWireCube(new Vector3(playerTransform.position.x + diagonalBoxOffsetX + wallGrabBoxOffsetX * -1 , playerTransform.position.y - groundCheckOffsetY + diagonalBoxOffsetY, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
+        Gizmos.DrawWireCube(new Vector3(playerTransform.position.x - diagonalBoxOffsetX + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + diagonalBoxOffsetY, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y - groundCheckOffsetY, transform.position.z), -Vector3.up);
     }
