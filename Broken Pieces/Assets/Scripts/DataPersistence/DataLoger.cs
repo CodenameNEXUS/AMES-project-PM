@@ -11,6 +11,8 @@ public class DataLoger : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.savedLevel = data.currentLevel;
+        SceneManager.LoadScene(data.currentLevel);
+        Debug.Log("Loaded Level " + data.currentLevel);
     }
     public void SaveData(ref GameData data)
     {

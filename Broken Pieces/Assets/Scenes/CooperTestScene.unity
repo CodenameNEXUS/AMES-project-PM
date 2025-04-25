@@ -4761,6 +4761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4054eaea9a944c340aeaab9bfd81c4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileName: data.json
 --- !u!4 &448960210
 Transform:
   m_ObjectHideFlags: 0
@@ -4769,8 +4770,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448960208}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.88673, y: 2.6333625, z: -0.025891656}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.8867297, y: 2.6333625, z: -0.025891656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4787,7 +4788,7 @@ GameObject:
   - component: {fileID: 636187792}
   - component: {fileID: 636187791}
   m_Layer: 0
-  m_Name: LevelLoger
+  m_Name: DataLoger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4813,7 +4814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636187790}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.57033104, y: 0.18384692, z: -0.032911588}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -49120,9 +49121,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1514244869511659275, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_text
+      value: Save Game
+      objectReference: {fileID: 0}
     - target: {fileID: 1591545822278634702, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
       propertyPath: m_Name
       value: PauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583496039182531284, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583496039182531284, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583496039182531284, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583496039182531284, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4666600326884020624, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_text
+      value: Save and Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8236054169903351915, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 448960209}
+    - target: {fileID: 8236054169903351915, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveAndQuitToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8236054169903351915, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DataPersistenceManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9025085403297279309, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 448960209}
+    - target: {fileID: 9025085403297279309, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 9025085403297279309, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DataPersistenceManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
