@@ -8,16 +8,12 @@ using UnityEngine.SceneManagement;
 public class DataLoger : MonoBehaviour, IDataPersistence
 {
     private string savedLevel = "Level 1";
-    public void Start()
-    {
-        savedLevel = SceneManager.GetActiveScene().name;
-    }
     public void LoadData(GameData data)
     {
         this.savedLevel = data.currentLevel;
     }
     public void SaveData(ref GameData data)
     {
-        data.currentLevel = this.savedLevel;
+        data.currentLevel = SceneManager.GetActiveScene().name;
     }
 }

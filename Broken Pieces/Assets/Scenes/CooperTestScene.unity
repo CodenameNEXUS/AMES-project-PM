@@ -4776,6 +4776,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &636187790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636187792}
+  - component: {fileID: 636187791}
+  m_Layer: 0
+  m_Name: LevelLoger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &636187791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636187790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54fff653c2338c44a8f8a082f84b64a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &636187792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636187790}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.57033104, y: 0.18384692, z: -0.032911588}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904515518
 GameObject:
   m_ObjectHideFlags: 0
@@ -48821,14 +48865,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      propertyPath: diagonalBoxOffsetX
-      value: 0.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      propertyPath: diagonalBoxOffsetY
-      value: 0.09
-      objectReference: {fileID: 0}
     - target: {fileID: 5411188020749240822, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -49170,6 +49206,7 @@ SceneRoots:
   - {fileID: 1948845970590312890}
   - {fileID: 1879015530}
   - {fileID: 5675277844260732392}
-  - {fileID: 448960210}
   - {fileID: 1957954412}
   - {fileID: 3681653744820486282}
+  - {fileID: 448960210}
+  - {fileID: 636187792}
