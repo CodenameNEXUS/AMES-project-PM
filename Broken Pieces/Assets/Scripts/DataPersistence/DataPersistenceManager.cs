@@ -25,11 +25,11 @@ public class DataPersistenceManager : MonoBehaviour
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        LoadGame();
     }
     public void NewGame()
     {
         this.gameData = new GameData();
+        SceneManager.LoadScene("Level 1");
     }
     public void LoadGame()
     {
