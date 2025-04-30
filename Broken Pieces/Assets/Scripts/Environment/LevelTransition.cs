@@ -9,7 +9,7 @@ public class LevelTransition : MonoBehaviour
     [SerializeField] private int levelToLoad;
     [SerializeField] private float fadeToBlackTime = 1;
     private float timer = -2;
-    public Image blackBox;
+    private Image blackBox;
     private bool fadingToBlack = false;
     private bool ran1 = false;
     public void Start()
