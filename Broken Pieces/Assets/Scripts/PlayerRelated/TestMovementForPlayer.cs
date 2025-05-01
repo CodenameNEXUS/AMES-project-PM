@@ -37,7 +37,7 @@ public class TestMovementForPlayer : MonoBehaviour
     [SerializeField] private float accelerationMultiplaction = 2f;
     [SerializeField] private float jumpMultiplacation = 1.5f;
     [SerializeField] private float dashSpeed = 10f;
-    [SerializeField] private float dashDuration = 0.06f;
+    public float dashDuration = 0.06f;
     [Header("DONT CHANGE IN EDITOR THIS STUFF IS FOR ANIMATION CONTROL")]
     public bool canDash = false;
     public bool isGrounded = false;
@@ -52,6 +52,7 @@ public class TestMovementForPlayer : MonoBehaviour
     bool holdingJump = false;
     bool lastFrameSpeedMask;
     bool runningCode = false;
+    public bool dashActive = false;
     Rigidbody2D rb;
     Transform trans;
     float defaultGravScale;
@@ -388,7 +389,11 @@ public class TestMovementForPlayer : MonoBehaviour
         }
         if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && isGrounded)
         {
-            rb.velocity = new Vector2 (rb.velocity.x * groundSpeedFalloff, rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.x * groundSpeedFalloff, rb.velocity.y);
+        }
+        if (dashActive && timer4VC < 0)
+        {
+            dashActive = false;
         }
     }
     void Jump()
@@ -400,6 +405,7 @@ public class TestMovementForPlayer : MonoBehaviour
     {
         Debug.Log("Dashed");
         canDash = false;
+        dashActive = true;
         if (goingRight)
         {
             rb.velocity = new Vector2(dashSpeed * 5, 0.5f);

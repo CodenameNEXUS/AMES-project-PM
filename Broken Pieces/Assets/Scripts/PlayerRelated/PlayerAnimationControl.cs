@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimationControl : MonoBehaviour
 {
     Animator playerAC;
-    TestMovementForPlayer PlayerScript;
+    TestMovementForPlayer playerScript;
     Rigidbody2D playerRB;
     SpriteRenderer SPR;
     int playerVelY;
@@ -14,7 +14,7 @@ public class PlayerAnimationControl : MonoBehaviour
     {
         SPR = GetComponent<SpriteRenderer>();
         playerAC = GetComponent<Animator>();
-        PlayerScript = gameObject.GetComponentInParent<TestMovementForPlayer>();
+        playerScript = gameObject.GetComponentInParent<TestMovementForPlayer>();
         playerRB = gameObject.transform.parent.GetComponent<Rigidbody2D>();
     }
     void Update()
@@ -30,10 +30,10 @@ public class PlayerAnimationControl : MonoBehaviour
         {
             playerVelX = 1;
         }
-        if (playerVelX == -1 || PlayerScript.wallHangR)
+        if (playerVelX == -1 || playerScript.wallHangR)
         {
             SPR.flipX = true;
-        } else if(playerVelX == 1 || PlayerScript.wallHangL)
+        } else if(playerVelX == 1 || playerScript.wallHangL)
         {
             SPR.flipX = false;
         }
@@ -58,8 +58,9 @@ public class PlayerAnimationControl : MonoBehaviour
             //playerAC.speed = 1 + playerRB.velocity.x * -0.1f;
             playerAC.SetFloat("AnimationSpeed", playerRB.velocity.x * -0.2f);
         }
-        playerAC.SetBool("IsGrounded", PlayerScript.isGrounded);
-        playerAC.SetBool("IsWallHanging", PlayerScript.haningOnWall);
+        playerAC.SetBool("DashActive", playerScript.dashActive);
+        playerAC.SetBool("IsGrounded", playerScript.isGrounded);
+        playerAC.SetBool("IsWallHanging", playerScript.haningOnWall);
         playerAC.SetInteger("VelocityX", playerVelX);
         playerAC.SetInteger("VelocityY", playerVelY);
     }
