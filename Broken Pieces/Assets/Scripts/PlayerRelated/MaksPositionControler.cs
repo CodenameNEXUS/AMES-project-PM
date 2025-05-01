@@ -12,11 +12,13 @@ public class MaksPositionControler : MonoBehaviour
     private Animator playerAC;
     string currentAnimation;
     AnimatorClipInfo[] animatorinfo;
+    Vector3 defaultPosOfMaskMannager;
     int switchState = 0;
     void Start()
     {
         playerAC = GameObject.FindGameObjectWithTag("PlayerSprite").GetComponent<Animator>();
         playerSPR = GameObject.FindGameObjectWithTag("PlayerSprite").GetComponent<SpriteRenderer>();
+        defaultPosOfMaskMannager = transform.position;
     }
     void Update()
     {
@@ -48,12 +50,14 @@ public class MaksPositionControler : MonoBehaviour
         }
         if (playerSPR.flipX)
         {
+            transform.localPosition = new Vector3(transform.localPosition.x * -1, transform.localPosition.y, transform.localPosition.z);
             speedMaskSPR.flipX = true;
             jumpMaskSPR.flipX = true;
             dashMaskSPR.flipX = true;
         }
         else
         {
+            transform.localPosition = new Vector3(transform.localPosition.x * -1, transform.localPosition.y, transform.localPosition.z);
             speedMaskSPR.flipX = false;
             jumpMaskSPR.flipX = false;
             dashMaskSPR.flipX = false;
