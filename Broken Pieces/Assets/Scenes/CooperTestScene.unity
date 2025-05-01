@@ -48767,6 +48767,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6858277324480302034, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -48793,7 +48797,7 @@ Animator:
   m_GameObject: {fileID: 2775965402238657102}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9de7a8cc0ed97d042b0d40d0868e1d41, type: 2}
+  m_Controller: {fileID: 9100000, guid: a0108ba63d8d07a4fa5e1101d7e28b0e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -46,7 +46,7 @@ public class TestMovementForPlayer : MonoBehaviour
     bool jumped = false;
     bool wallJumpBoxContactL = false;
     bool wallJumpBoxContactR = false;
-    bool haningOnWall = false;
+    public bool haningOnWall = false;
     public bool wallHangL = false;
     public bool wallHangR = false;
     bool holdingJump = false;
