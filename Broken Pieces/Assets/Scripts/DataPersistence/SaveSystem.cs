@@ -9,7 +9,7 @@ public class SaveSystem : MonoBehaviour
     string keyWord = "123456789";
     public void NewGame()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Level 5");
     }
 
     public void SaveGame()
