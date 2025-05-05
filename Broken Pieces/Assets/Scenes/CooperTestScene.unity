@@ -122,6 +122,71 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &100609661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 100609662}
+  - component: {fileID: 100609663}
+  m_Layer: 5
+  m_Name: ImageObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &100609662
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100609661}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4152830970739653485}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &100609663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100609661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: New Category
+    m_Hash: 0
+    m_CategoryList:
+    - m_Name: Entry
+      m_Hash: 0
+      m_Sprite: {fileID: 85713658, guid: 61cc1fe7bc1463d418964e8477ec2844, type: 3}
+    - m_Name: Entry_0
+      m_Hash: 0
+      m_Sprite: {fileID: 544206926, guid: 61cc1fe7bc1463d418964e8477ec2844, type: 3}
+    - m_Name: Entry_1
+      m_Hash: 0
+      m_Sprite: {fileID: 1103582330, guid: 61cc1fe7bc1463d418964e8477ec2844, type: 3}
+    - m_Name: Entry_2
+      m_Hash: 0
+      m_Sprite: {fileID: 1341591926, guid: 61cc1fe7bc1463d418964e8477ec2844, type: 3}
+  m_SpriteLibraryAsset: {fileID: 0}
 --- !u!1 &133994884
 GameObject:
   m_ObjectHideFlags: 0
@@ -48843,14 +48908,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      propertyPath: diagonalBoxOffsetX
-      value: 0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 3109481005043773180, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      propertyPath: diagonalBoxOffsetY
-      value: 0.08
-      objectReference: {fileID: 0}
     - target: {fileID: 5411188020749240822, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -49140,7 +49197,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 266887006738379110, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 100609662}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1591545822278634702, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
       insertIndex: -1
@@ -49172,6 +49232,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!224 &4152830970739653485 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 266887006738379110, guid: b432b72b82bf72e419f67267644cc87e, type: 3}
+  m_PrefabInstance: {fileID: 4152830970739653482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5293028179241029565
 PrefabInstance:
   m_ObjectHideFlags: 0
