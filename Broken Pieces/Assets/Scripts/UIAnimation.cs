@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIAnimation : MonoBehaviour
@@ -10,17 +11,23 @@ public class UIAnimation : MonoBehaviour
     Canvas canvas;
     int random;
     int timer;
+    int timerThresh;
     void Start()
     {
         canvas = GetComponentInParent<Canvas>();
         uiImages = GameObject.FindGameObjectWithTag("UIImageObject").GetComponent<UIImages>();
         image = GetComponent<Image>();
+        timerThresh = 100;
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            timerThresh = timerThresh * 2;
+        }
 
     }
     void Update()
     {
         timer += 1;
-        if (timer > 100 && canvas.enabled)
+        if (timer > timerThresh && canvas.enabled)
         {
             int oldRan = random;
             
