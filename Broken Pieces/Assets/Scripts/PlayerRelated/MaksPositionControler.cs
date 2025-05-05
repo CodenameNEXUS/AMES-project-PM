@@ -12,10 +12,8 @@ public class MaksPositionControler : MonoBehaviour
     private Animator playerAC;
     private Transform playerSpriteTRANS;
     string currentSpriteFrame;
-    //AnimatorClipInfo[] animatorinfo;
     Vector3 defaultPosOfMaskMannager;
     Vector3 defaultPosOfPlayerSprite;
-    int switchState = 0;
     void Start()
     {
         playerAC = GameObject.FindGameObjectWithTag("PlayerSprite").GetComponent<Animator>();
@@ -26,12 +24,6 @@ public class MaksPositionControler : MonoBehaviour
     }
     void Update()
     {
-        // temp vector storage for setup
-        Vector3 eee = new Vector3 (0.16f, 0.22f, 0);
-        Vector3 Default = new Vector3 (0.12f, 0.22f, 0);
-        //animatorinfo = this.playerAC.GetCurrentAnimatorClipInfo(0);
-        //currentAnimation = animatorinfo[0].clip.name;
-        // One pixel worth of offset is about 0.04
         currentSpriteFrame = playerSPR.sprite.name;
         if (currentSpriteFrame == "Player_0")
         {
