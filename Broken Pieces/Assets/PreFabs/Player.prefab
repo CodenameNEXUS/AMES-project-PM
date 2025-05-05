@@ -370,8 +370,8 @@ MonoBehaviour:
   wallGrabBoxPosY: -0.24
   wallGrabBoxOffsetX: 0.19
   wallGrabBoxHightY: 0.48
-  diagonalBoxOffsetX: 0.06
-  diagonalBoxOffsetY: 0.09
+  diagonalBoxOffsetX: 0.04
+  diagonalBoxOffsetY: 0.08
   layerOfGround:
     serializedVersion: 2
     m_Bits: 8
