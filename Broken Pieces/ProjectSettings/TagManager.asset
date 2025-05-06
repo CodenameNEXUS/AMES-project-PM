@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerSprite
   - UIImageObject
+  - WinScreen
   layers:
   - Default
   - TransparentFX
