@@ -9,6 +9,7 @@ public class PlayerRespawnGoop : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            PlayerCameraControler.PlayerCameraRespawnSequence();
             CheckpointMannager.RespawnFromCheckpoint();
         }
     }
