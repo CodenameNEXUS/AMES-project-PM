@@ -4732,24 +4732,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &549106928 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7847832320158047491, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-  m_PrefabInstance: {fileID: 2775965402238657101}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &549106933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549106928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f683a48b32fd5c84a94041eeb784832c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  respawnSpeed: 0.02
 --- !u!1 &815047772
 GameObject:
   m_ObjectHideFlags: 0
@@ -49268,10 +49250,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7847832320158047491, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 549106933}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdddc65ba02696a4cb56a1592d63915c, type: 3}
 --- !u!1001 &3604156391555433286
 PrefabInstance:
