@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e379f900b56c5454da790d9aacde9c00
+guid: 975dff68d4878134db983dfa681c188e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -100,12 +100,12 @@ TextureImporter:
       name: death anim_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 100
+        x: 50
+        y: 0
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -121,12 +121,12 @@ TextureImporter:
       name: death anim_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 100
+        x: 0
+        y: 0
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,12 +142,12 @@ TextureImporter:
       name: death anim_2
       rect:
         serializedVersion: 2
-        x: 0
+        x: 50
         y: 50
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,12 +163,12 @@ TextureImporter:
       name: death anim_3
       rect:
         serializedVersion: 2
-        x: 50
+        x: 0
         y: 50
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,12 +184,12 @@ TextureImporter:
       name: death anim_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 50
+        y: 100
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,12 +205,12 @@ TextureImporter:
       name: death anim_5
       rect:
         serializedVersion: 2
-        x: 50
-        y: 0
+        x: 0
+        y: 100
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

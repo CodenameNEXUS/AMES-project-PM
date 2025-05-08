@@ -38,7 +38,7 @@ public class TestMovementForPlayer : MonoBehaviour
     [SerializeField] private float jumpMultiplacation = 1.5f;
     [SerializeField] private float dashSpeed = 10f;
     public float dashDuration = 0.06f;
-    [Header("DONT CHANGE IN EDITOR THIS STUFF IS FOR ANIMATION CONTROL")]
+    [Header("DONT CHANGE IN EDITOR")]
     public bool canDash = false;
     public bool isGrounded = false;
     bool velCap = true;
@@ -49,6 +49,7 @@ public class TestMovementForPlayer : MonoBehaviour
     public bool haningOnWall = false;
     public bool wallHangL = false;
     public bool wallHangR = false;
+    static public bool playerCanMove = true;
     bool holdingJump = false;
     bool lastFrameSpeedMask;
     bool runningCode = false;
@@ -166,7 +167,10 @@ public class TestMovementForPlayer : MonoBehaviour
             trueJumpForce = jumpForce;
         }
         //Checks if player is holding jump key
-        holdingJump = Input.GetKey(KeyCode.Z);
+        if (playerCanMove)
+        {
+            holdingJump = Input.GetKey(KeyCode.Z);
+        }
         //timers
         timer1JB += Time.deltaTime;
         timer2JB += Time.deltaTime;
@@ -294,13 +298,17 @@ public class TestMovementForPlayer : MonoBehaviour
             haningOnWall = false;
         }
         //LR movement
-        if (Input.GetKey(KeyCode.LeftArrow) && !haningOnWall && timer3WJ >= 0.15)
+        if (playerCanMove)
         {
-            rb.velocity = new Vector2(rb.velocity.x - trueAccel, rb.velocity.y);
-        }
-        if (Input.GetKey(KeyCode.RightArrow) && !haningOnWall && timer3WJ >= 0.15)
-        {
-            rb.velocity = new Vector2(rb.velocity.x + trueAccel, rb.velocity.y);
+            if (Input.GetKey(KeyCode.LeftArrow) && !haningOnWall && timer3WJ >= 0.15)
+            {
+                rb.velocity = new Vector2(rb.velocity.x - trueAccel, rb.velocity.y);
+            }
+            if (Input.GetKey(KeyCode.RightArrow) && !haningOnWall && timer3WJ >= 0.15)
+            {
+                rb.velocity = new Vector2(rb.velocity.x + trueAccel, rb.velocity.y);
+            }
+
         }
         //Top speed cap
         if (velCap && rb.velocity.x > trueMaxSpeed)
@@ -443,5 +451,15 @@ public class TestMovementForPlayer : MonoBehaviour
         Gizmos.DrawWireCube(new Vector3(playerTransform.position.x - diagonalBoxOffsetX + wallGrabBoxOffsetX, playerTransform.position.y - groundCheckOffsetY + diagonalBoxOffsetY, playerTransform.position.z), new Vector3(0.1f, 0.1f, 0));
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(new Vector3(transform.position.x, transform.position.y - groundCheckOffsetY, transform.position.z), -Vector3.up);
+    }
+    public void UnequiptMask()
+    {
+        Debug.Log("Unequipted Mask");
+        speedMask.enabled = false;
+        jumpMask.enabled = false;
+        dashMask.enabled = false;
+        maskState1S = false;
+        maskState2J = false;
+        maskState3D = false;
     }
 }

@@ -10,23 +10,19 @@ public class UIAnimationSmallButton : MonoBehaviour
     UIImages uiImages;
     Canvas canvas;
     int random;
-    int timer;
-    int timerThresh;
+    float timer;
+    float timerThresh;
     void Start()
     {
         canvas = GetComponentInParent<Canvas>();
         uiImages = GameObject.FindGameObjectWithTag("UIImageObject").GetComponent<UIImages>();
         image = GetComponent<Image>();
-        timerThresh = 100;
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            timerThresh = timerThresh * 2;
-        }
+        timerThresh = 0.25f;
 
     }
     void Update()
     {
-        timer += 1;
+        timer += Time.deltaTime;
         if (timer > timerThresh && canvas.enabled)
         {
             int oldRan = random;
